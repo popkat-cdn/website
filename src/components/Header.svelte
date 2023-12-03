@@ -6,9 +6,7 @@
 	import Swal from 'sweetalert2';
 	import { page } from '$app/stores';
 
-	let navigation = [
-		{ name: 'Home', href: '/', current: false },
-	];
+	let navigation = [{ name: 'Home', href: '/', current: false }];
 
 	navigation.map((p) => {
 		if (p.href === $page.url.pathname) p.current = true;
@@ -131,9 +129,9 @@
 			</div>
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<div class="flex flex-shrink-0 items-center">
-					<img class="block h-8 w-auto lg:hidden" src="/logo.png" alt="Antiraid" />
+					<img class="block h-10 w-auto lg:hidden" src="/logo.png" alt="Popkat" />
 
-					<img class="hidden h-8 w-auto lg:block" src="/logo.png" alt="Antiraid" />
+					<img class="hidden h-10 w-auto lg:block" src="/logo.png" alt="Popkat" />
 				</div>
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">

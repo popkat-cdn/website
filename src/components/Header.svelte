@@ -30,10 +30,6 @@
 		return classes.filter(Boolean).join(' ');
 	};
 
-	const loginDiscord = async () => {
-		return true;
-	};
-
 	const openMobileMenu = () => {
 		const menu = document.getElementById('mobile-menu') as HTMLDivElement;
 		const menuIcon = document.getElementById('menuIcon') as HTMLElement;
@@ -235,8 +231,10 @@
 						{:else}
 							<button
 								type="button"
-								on:click={loginDiscord}
-								class="rounded-ful p-1 text-gray-400 hover:text-white focus:outline-none"
+								on:click={() => {
+									window.location.href = '/auth/login';
+								}}
+								class="rounded-full p-1 text-white font-bold focus:outline-none"
 							>
 								Login
 							</button>

@@ -8,7 +8,6 @@
 		TwitterAuthProvider,
 		sendPasswordResetEmail
 	} from 'firebase/auth';
-	import type { AnyNode } from 'postcss';
 	import Swal from 'sweetalert2';
 
 	export let data: any;

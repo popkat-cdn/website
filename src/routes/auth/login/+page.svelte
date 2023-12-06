@@ -6,7 +6,11 @@
 		signInWithEmailAndPassword,
 		signInWithPopup,
 		TwitterAuthProvider,
-		sendPasswordResetEmail
+		sendPasswordResetEmail,
+		GithubAuthProvider,
+
+		type UserCredential
+
 	} from 'firebase/auth';
 	import Swal from 'sweetalert2';
 
@@ -17,6 +21,10 @@
 	let email: string = '';
 	let password: string = '';
 
+    const callback = (userCredential: UserCredential) => {
+        console.log(userCredential.user);
+    };
+
 	const login = () => {
 		if (email === '' || password === '')
 			return Swal.fire(
@@ -26,10 +34,7 @@
 			);
 
 		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-				console.log(user);
-			})
+			.then(callback)
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
@@ -40,10 +45,18 @@
 
 	const twitter = () => {
 		signInWithPopup(auth, new TwitterAuthProvider())
-			.then((result: any) => {
-				const user = result.user;
-				console.log(user);
-			})
+			.then(callback)
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+
+				return Swal.fire(`Error ${errorCode}`, errorMessage, 'error');
+			});
+	};
+
+	const github = () => {
+		signInWithPopup(auth, new GithubAuthProvider())
+			.then(callback)
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
@@ -140,12 +153,21 @@
 				>
 			</div>
 
-			<button
-				type="button"
-				class="flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-				on:click={twitter}
-				>Login with <i class="flex fa-brands fa-x-twitter mt-1.5 ml-1"></i>
-			</button>
+			<div class="flex">
+				<button
+					type="button"
+					class="flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					on:click={twitter}
+					>Login with <i class="flex fa-brands fa-x-twitter mt-1.5 ml-1"></i>
+				</button>
+
+				<button
+					type="button"
+					class="flex ml-2 justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					on:click={github}
+					>Login with <i class="flex fa-brands fa-github mt-1.5 ml-2 pr-1"></i> Github
+				</button>
+			</div>
 		</form>
 	</div>
 </div>

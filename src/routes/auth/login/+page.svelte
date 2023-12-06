@@ -3,14 +3,13 @@
 	import { initializeApp } from 'firebase/app';
 	import {
 		getAuth,
+		getIdToken,
 		signInWithEmailAndPassword,
 		signInWithPopup,
 		TwitterAuthProvider,
 		sendPasswordResetEmail,
 		GithubAuthProvider,
-
 		type UserCredential
-
 	} from 'firebase/auth';
 	import Swal from 'sweetalert2';
 
@@ -21,9 +20,20 @@
 	let email: string = '';
 	let password: string = '';
 
-    const callback = (userCredential: UserCredential) => {
-        console.log(userCredential.user);
-    };
+	const callback = (userCredential: UserCredential) => {
+		console.log(userCredential.user);
+
+		getIdToken(userCredential.user, true)
+			.then((idToken) => {
+				console.log(idToken);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+
+				return Swal.fire(`Error ${errorCode}`, errorMessage, 'error');
+			});
+	};
 
 	const login = () => {
 		if (email === '' || password === '')
